@@ -14,7 +14,7 @@ framework Ecto;
   * (3,0 pontos) - A aplicação deve permitir que um usuário possa realizar a criação, edição, listagem e exclusão de receitas e despesas;
   * (1,5 pontos) - A aplicação deve possuir um layout customizado baseado em bootstrap ou um outro framework
 de UI a sua escolha;
-  * [DESAFIO] (2 pontos) - A aplicação deve utilizar o recurso de LiveView para atualizar os dados em tempo
+  * **[DESAFIO]** (2 pontos) - A aplicação deve utilizar o recurso de LiveView para atualizar os dados em tempo
 real;
 
 ## Integrante
