@@ -1,0 +1,42 @@
+<h1>Usuários</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.user_index_path(@socket, :index)}>
+    <.live_component
+      module={Av3ElixirWeb.UserLive.FormComponent}
+      id={@user.id || :new}
+      title={@page_title}
+      action={@live_action}
+      user={@user}
+      return_to={Routes.user_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table class="table table-bordered table-dark text-center">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>senha</th>
+      <th>E-mail</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="users">
+    <%= for user <- @users do %>
+      <tr class="text-center" id={"user-#{user.id}"}>
+        <td><%= user.username %></td>
+        <td><%= user.password %></td>
+        <td><%= user.email %></td>
+
+        <td>
+          <button class="text-white bg-dark"><%= live_patch "Editar", to: Routes.user_index_path(@socket, :edit, user) %></button>
+          <button class="text-white bg-dark"><%= link "Deletar", to: "#", phx_click: "delete", phx_value_id: user.id, data: [confirm: "Você tem certeza?"] %></button>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<button class="text-white bg-dark"><%= live_patch "Criar novo usuário", to: Routes.user_index_path(@socket, :new) %></button>

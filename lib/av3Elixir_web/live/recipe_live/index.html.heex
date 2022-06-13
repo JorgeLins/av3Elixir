@@ -1,0 +1,40 @@
+<h1>Receitas</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.recipe_index_path(@socket, :index)}>
+    <.live_component
+      module={Av3ElixirWeb.RecipeLive.FormComponent}
+      id={@recipe.id || :new}
+      title={@page_title}
+      action={@live_action}
+      recipe={@recipe}
+      return_to={Routes.recipe_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table class="table table-bordered table-dark text-center">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Valor</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="recipes">
+    <%= for recipe <- @recipes do %>
+      <tr class="text-center" id={"recipe-#{recipe.id}"}>
+        <td><%= recipe.name %></td>
+        <td><%= recipe.value %></td>
+
+        <td>
+          <button class="text-white bg-dark"><%= live_patch "Editar", to: Routes.recipe_index_path(@socket, :edit, recipe) %></button>
+          <button class="text-white bg-dark"><%= link "Deletar", to: "#", phx_click: "delete", phx_value_id: recipe.id, data: [confirm: "Você tem certeza?"] %></button>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<button class="text-white bg-dark"><%= live_patch "Nova receita", to: Routes.recipe_index_path(@socket, :new) %></button>

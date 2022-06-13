@@ -1,0 +1,40 @@
+<h1>Despesas</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.expense_index_path(@socket, :index)}>
+    <.live_component
+      module={Av3ElixirWeb.ExpenseLive.FormComponent}
+      id={@expense.id || :new}
+      title={@page_title}
+      action={@live_action}
+      expense={@expense}
+      return_to={Routes.expense_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table class="table table-bordered table-dark text-center">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Valor</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="expense">
+    <%= for expense <- @expense_collection do %>
+      <tr id={"expense-#{expense.id}"}>
+        <td><%= expense.name %></td>
+        <td><%= expense.value %></td>
+
+        <td>
+          <button class="text-white bg-dark"><%= live_patch "Editar", to: Routes.expense_index_path(@socket, :edit, expense) %></button>
+          <button class="text-white bg-dark"><%= link "Deletar", to: "#", phx_click: "delete", phx_value_id: expense.id, data: [confirm: "Você te certeza?"] %></button>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<button class="text-white bg-dark"><%= live_patch "Nova despesa", to: Routes.expense_index_path(@socket, :new) %></button>

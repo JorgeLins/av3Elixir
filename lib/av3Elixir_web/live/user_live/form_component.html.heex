@@ -1,0 +1,28 @@
+<div class="bg-dark">
+  <h2><%= @title %></h2>
+
+  <.form
+    let={f}
+    for={@changeset}
+    id="user-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save">
+  
+    <%= label f, :Usuário %>
+    <%= text_input f, :username %>
+    <%= error_tag f, :username %>
+  
+    <%= label f, :senha %>
+    <%= text_input f, :password %>
+    <%= error_tag f, :password %>
+  
+    <%= label f, :Email %>
+    <%= text_input f, :email %>
+    <%= error_tag f, :email %>
+  
+    <div>
+      <%= submit "Criar", phx_disable_with: "Saving..." %>
+    </div>
+  </.form>
+</div>
